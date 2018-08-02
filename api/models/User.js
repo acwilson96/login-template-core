@@ -10,33 +10,20 @@ module.exports = {
 
   attributes: {
 
-    //  ╔═╗╦═╗╦╔╦╗╦╔╦╗╦╦  ╦╔═╗╔═╗
-    //  ╠═╝╠╦╝║║║║║ ║ ║╚╗╔╝║╣ ╚═╗
-    //  ╩  ╩╚═╩╩ ╩╩ ╩ ╩ ╚╝ ╚═╝╚═╝
-
     createdAt: { type: 'number', autoCreatedAt: true, },
     updatedAt: { type: 'number', autoUpdatedAt: true, },
-    id: { type: 'string', columnName: '_id', autoIncrement: true},
+    id: { type: 'string', columnName: '_id', autoIncrement: true },
 
     username: {
       type: 'string',
       required: true,
       unique: true,
     },
-    
+
     password: {
-        type: 'string',
-        required: true,
-    }
-
-    //  ╔═╗╔╦╗╔╗ ╔═╗╔╦╗╔═╗
-    //  ║╣ ║║║╠╩╗║╣  ║║╚═╗
-    //  ╚═╝╩ ╩╚═╝╚═╝═╩╝╚═╝
-
-
-    //  ╔═╗╔═╗╔═╗╔═╗╔═╗╦╔═╗╔╦╗╦╔═╗╔╗╔╔═╗
-    //  ╠═╣╚═╗╚═╗║ ║║  ║╠═╣ ║ ║║ ║║║║╚═╗
-    //  ╩ ╩╚═╝╚═╝╚═╝╚═╝╩╩ ╩ ╩ ╩╚═╝╝╚╝╚═╝
+      type: 'string',
+      required: true,
+    },
 
     // A list of Devices this User is authenticated on.
     devices: {
@@ -44,7 +31,7 @@ module.exports = {
       via: 'owner'
     },
 
-    customToJSON: function() {
+    customToJSON: function () {
       // Return a shallow copy of this record with the password removed.
       return _.omit(this, ['password'])
     },
@@ -52,23 +39,23 @@ module.exports = {
     // Called before a User model is created, will hash the password; returns error if hashing fails.
     beforeCreate: (values, cb) => {
       // Hash password
-      bcrypt.hash(values.password, 10, function(err, hash) {
-          if(err) return cb(err);
-          values.password = hash;
-          cb();
+      bcrypt.hash(values.password, 10, (err, hash) => {
+        if (err) { return cb(err); }
+        values.password = hash;
+        cb();
       });
     },
 
     // After a User's credentials have been updated, de-auth all their devices.
     afterUpdate: (updatedRecord, cb) => {
-      Device.destroy({owner: updatedRecord.id}).exec(cb);
+      Device.destroy({ owner: updatedRecord.id }).exec(cb);
     },
 
     // Events to trigger when a User is destroyed.
     afterDestroy: (destroyedRecords, cb) => {
       var userID = _.pluck(destroyedRecords, 'id');
       // Destroy all this Users data. 
-      Device.destroy({owner: userID}).exec(cb);
+      Device.destroy({ owner: userID }).exec(cb);
     },
 
   },
