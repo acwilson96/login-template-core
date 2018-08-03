@@ -33,6 +33,15 @@ module.exports = {
    *
    */
   get: function (req, res) {
+    /* Input Validation */
+    if (req.options.user === null || req.options.user === undefined) {
+      return res.json({
+        error: true,
+        warning: false,
+        message: 'Unknown Server Error, Please Refresh & Try Again',
+        content: null
+      });
+    }
     return res.json({
       error: false,
       warning: false,
@@ -58,6 +67,24 @@ module.exports = {
     // Parse POST for User params.
     var submitUsername  = req.param('username');
     var submitPassword  = req.param('password');
+
+    if (submitUsername === null || submitUsername === undefined) {
+      return res.json({
+        error: false,
+        warning: true,
+        message: usernameInvalidMsg,
+        content: null
+      });
+    }
+
+    if (submitPassword === null || submitPassword === undefined) {
+      return res.json({
+        error: false,
+        warning: true,
+        message: usernameInvalidMsg,
+        content: null
+      });
+    }
 
     // Check username is valid.
     if (submitUsername.search(usernameRegexp) === -1) {
@@ -124,9 +151,18 @@ module.exports = {
    * }
    *
    */
-  destroy: function (req, res) {
+  destroy: function (req, res) {)
     // Parse POST for User params.
-    var user      = req.options.user;
+    let user      = req.options.user;
+    if (user === null || user === undefined) {
+      return res.json({
+        error: true,
+        warning: false,
+        message: 'Unknown Server Error, Please Refresh & Try Again',
+        content: null
+      });
+    }
+
     // Remove the User model from the table. User model will delete its dependent children.
     User.destroy({
       id: user.id
@@ -160,6 +196,25 @@ module.exports = {
     var valuesToUpdate      = {};
     valuesToUpdate.password = req.param('password');
     var user                = req.options.user;
+
+    /* Input Validation */
+    if (user === null || user === undefined) {
+      return res.json({
+        error: true,
+        warning: false,
+        message: 'Unknown Server Error, Please Refresh & Try Again',
+        content: null
+      });
+    }
+    if (valuesToUpdate.password === null || valuesToUpdate.password === undefined) {
+      return res.json({
+        error: false,
+        warning: warning,
+        message: 'New Password Cannot be Empty',
+        content: null
+      });
+    }
+
     // Check new password is valid.
     if (valuesToUpdate.password.search(passwordRegexp) === -1) {
       return res.json({
