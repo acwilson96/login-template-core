@@ -151,7 +151,7 @@ module.exports = {
    * }
    *
    */
-  destroy: function (req, res) {)
+  destroy: function (req, res) {
     // Parse POST for User params.
     let user      = req.options.user;
     if (user === null || user === undefined) {

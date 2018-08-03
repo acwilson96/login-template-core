@@ -10,10 +10,10 @@ const bcrypt = require('bcrypt');
 let getFailureMessage = 'Invalid username or password.';
 
 module.exports = {
-  
+
   /*' post /unet/device/get'
    * Query to check and see if a device auth token is still valid.
-   * 
+   *
    * Returns json:
    * {
    *     error: [ true | false ],
@@ -52,7 +52,7 @@ module.exports = {
 
   /* 'post /unet/device/create'
    * Submit User credentils to create a Device authenticated to the supplied credentials.
-   * 
+   *
    * Returns json:
    * {
    *     error: [ true | false ],
