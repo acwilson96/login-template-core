@@ -67,7 +67,7 @@ module.exports = {
     var requestUsername  = req.param('username');
     var requestPassword  = req.param('password');
 
-    if (!requestUsername || !requestPassword) {
+    if (requestUsername === null || requestUsername === undefined || requestPassword === null || requestPassword === undefined) {
       return res.json({
         error: true,
         warning: false,
