@@ -9,14 +9,13 @@ const crypto = require('crypto');
 module.exports = {
 
   attributes: {
-    
+
     createdAt: { type: 'number', autoCreatedAt: true, },
     updatedAt: { type: 'number', autoUpdatedAt: true, },
     id: { type: 'string', columnName: '_id', autoIncrement: true},
 
     authToken: {
       type: 'string',
-      required: true
     },
 
     ip: {
@@ -39,7 +38,7 @@ module.exports = {
     // Generate random token.
     crypto.randomBytes(256, (err, buf) => {
       if (err) { return cb(err); };
-      values.token = buf.toString('hex');
+      values.authToken = buf.toString('hex');
       cb();
     });
   },
