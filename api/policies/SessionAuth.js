@@ -15,13 +15,16 @@ module.exports = function(req, res, next) {
   } else {
     authToken = req.param('authToken');
   }
+  if (authToken === null || authToken === undefined) {
+    return res.forbidden('You are not permitted to perform this action.');
+  }
   // Check the request is authenticted.
   Device.findOne({
     authToken: authToken
   }).exec((err, validDevice) => {
     if (err) { return res.serverError(err); }
     // If the device exists and is authenticated, find the User.
-    if (validDevice) {
+    if (validDevice !== undefined) {
       User.findOne({
         id: validDevice.owner
       }).populateAll().exec((err, deviceOwner) => {
