@@ -24,6 +24,7 @@ module.exports = {
     return {
       error: true,
       warning: false,
+      message: 'Fatal Error Occurred, Try Again Later',
       content: err
     };
   }
