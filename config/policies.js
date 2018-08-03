@@ -19,4 +19,10 @@ module.exports.policies = {
 
   // '*': true,
 
+  UserController: {
+    get: 'SessionAuth',
+    update: 'SessionAuth',
+    destroy: 'SessionAuth'
+  },
+
 };
