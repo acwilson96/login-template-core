@@ -24,9 +24,6 @@ module.exports.routes = {
   *                                                                          *
   ***************************************************************************/
 
-  '/': {
-    view: 'pages/homepage'
-  },
 
   /***************************************************************************
   *                                                                          *
@@ -44,6 +41,46 @@ module.exports.routes = {
   //  ╠═╣╠═╝║  ║╣ ║║║ ║║╠═╝║ ║║║║║ ║ ╚═╗
   //  ╩ ╩╩  ╩  ╚═╝╝╚╝═╩╝╩  ╚═╝╩╝╚╝ ╩ ╚═╝
 
+  'GET /csrfToken': {
+    action: 'security/grant-csrf-token',
+    cors: {
+      allowOrigins: [ 'http://localhost:3000' ]
+    }
+  },
+
+  // Device Controller
+
+  'post /device/get': {
+    controller: 'DeviceController',
+    action: 'get'
+  },
+
+  'post /device/create': {
+    controller: 'DeviceController',
+    action: 'create'
+  },
+
+  // User Controller
+
+  'post /user/get': {
+    controller: 'UserController',
+    action: 'get'
+  },
+
+  'post /user/create': {
+    controller: 'UserController',
+    action: 'create'
+  },
+
+  'post /user/destroy': {
+    controller: 'UserController',
+    action: 'destroy'
+  },
+
+  'post /user/update': {
+    controller: 'UserController',
+    action: 'update'
+  },
 
 
   //  ╦ ╦╔═╗╔╗ ╦ ╦╔═╗╔═╗╦╔═╔═╗
