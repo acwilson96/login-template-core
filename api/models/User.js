@@ -29,35 +29,35 @@ module.exports = {
     devices: {
       collection: 'Device',
       via: 'owner'
-    },
+    }
 
-    customToJSON: function () {
-      // Return a shallow copy of this record with the password removed.
-      return _.omit(this, ['password'])
-    },
+  },
 
-    // Called before a User model is created, will hash the password; returns error if hashing fails.
-    beforeCreate: (values, cb) => {
-      // Hash password
-      bcrypt.hash(values.password, 10, (err, hash) => {
-        if (err) { return cb(err); }
-        values.password = hash;
-        cb();
-      });
-    },
+  customToJSON: () => {
+    // Return a shallow copy of this record with the password removed.
+    return _.omit(this, ['password']);
+  },
 
-    // After a User's credentials have been updated, de-auth all their devices.
-    afterUpdate: (updatedRecord, cb) => {
-      Device.destroy({ owner: updatedRecord.id }).exec(cb);
-    },
+  // Called before a User model is created, will hash the password; returns error if hashing fails.
+  beforeCreate: (valuesToSet, proceed) => {
+    // Hash password
+    bcrypt.hash(valuesToSet.password, 10, (err, hash) => {
+      if (err) { return cb(err); }
+      valuesToSet.password = hash;
+      return proceed();
+    });
+  },
 
-    // Events to trigger when a User is destroyed.
-    afterDestroy: (destroyedRecords, cb) => {
-      var userID = _.pluck(destroyedRecords, 'id');
-      // Destroy all this Users data. 
-      Device.destroy({ owner: userID }).exec(cb);
-    },
+  // After a User's credentials have been updated, de-auth all their devices.
+  afterUpdate: (updatedRecord, cb) => {
+    Device.destroy({ owner: updatedRecord.id }).exec(cb);
+  },
 
+  // Events to trigger when a User is destroyed.
+  afterDestroy: (destroyedRecords, cb) => {
+    var userID = _.pluck(destroyedRecords, 'id');
+    // Destroy all this Users data. 
+    Device.destroy({ owner: userID }).exec(cb);
   },
 
 };
