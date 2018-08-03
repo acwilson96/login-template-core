@@ -21,37 +21,38 @@ var accountUpdatedMsg     = 'Account succesfully updated. If you changed your pa
 module.exports = {
 
   /* 'post /user/get'
-  * Retrieves a User Model if authenticated.
-  * 
-  * Returns json:
-  * {
-  *     error: [ true | false ],
-  *     warning: [ true | false ],
-  *     content: Error, Warning or Success message,
-  *     user: The User model of this requester
-  * }
-  *
-  */
+   * Retrieves a User Model if authenticated.
+   *
+   * Returns json:
+   * {
+   *     error: [ true | false ],
+   *     warning: [ true | false ],
+   *     content: Error, Warning or Success message,
+   *     user: The User model of this requester
+   * }
+   *
+   */
   get: function (req, res) {
-    // Parse POST for User params.
-    var user      = req.options.user;
     return res.json({
       error: false,
       warning: false,
-      content: user
+      message: null,
+      content: {
+        user: _.omit(req.options.user, ['password'])
+      }
     });
   },
 
   /* 'post /user/create'
-    * Check if a user exists under post param "username". If not, creates a new one.
-    * 
-    * Returns json:
-    * {
-    *     error: [ true | false ],
-    *     warning: [ true | false ],
-    *     content: Error, Warning or Success message; E.G. [ 'User already exists' | 'Password must contain 1 uppercase' ],
-    * }
-    */
+   * Check if a user exists under post param "username". If not, creates a new one.
+   *
+   * Returns json:
+   * {
+   *     error: [ true | false ],
+   *     warning: [ true | false ],
+   *     content: Error, Warning or Success message; E.G. [ 'User already exists' | 'Password must contain 1 uppercase' ],
+   * }
+   */
   create: function (req, res) {
 
     // Parse POST for User params.
@@ -63,7 +64,8 @@ module.exports = {
       return res.json({
         error: false,
         warning: true,
-        content: usernameInvalidMsg
+        message: usernameInvalidMsg,
+        content: null
       });
     }
 
@@ -72,13 +74,14 @@ module.exports = {
       return res.json({
         error: false,
         warning: true,
-        content: passwordInvalidMsg
+        message: passwordInvalidMsg,
+        content: null
       });
     }
 
     // Check if a User exists under this username already.
     User.findOne({
-      username: uname
+      username: submitUsername
     }).exec((err, searchedUser) => {
       // Error: return error to client app.
       if (err) { return res.json(Utils.returnJsonError(err)); }
@@ -88,17 +91,21 @@ module.exports = {
         return res.json({
           error: false,
           warning: true,
-          content: userExistsMsg
+          message: userExistsMsg,
+          content: null
         });
       } else {
         User.create({
-          username: uname,
-          password: pword
-        });
-        return res.json({
-          error: false,
-          warning: false,
-          content: userCreatedMsg
+          username: submitUsername,
+          password: submitPassword
+        }).exec((err, newUser) => {
+          if (err) { return res.json(Utils.returnJsonError(err)); }
+          return res.json({
+            error: false,
+            warning: false,
+            message: userCreatedMsg,
+            content: newUser
+          });
         });
       }
     });
@@ -106,7 +113,7 @@ module.exports = {
 
   /* 'post /user/destroy'
    * Destroys a User model if requested is authenticated.
-   * 
+   *
    * Returns json:
    * {
    *     error: [ true | false ],
@@ -123,17 +130,22 @@ module.exports = {
     // Remove the User model from the table. User model will delete its dependent children.
     User.destroy({
       id: user.id
-    });
-    return res.json({
-      error: false,
-      warning: false,
-      content: 'Account Deleted.'
+    })
+    .fetch()
+    .exec((err) => {
+      if (err) { return res.json(Utils.returnJsonError(err)); }
+      return res.json({
+        error: false,
+        warning: false,
+        message: 'Account Deleted.',
+        content: null
+      });
     });
   },
 
   /* 'post /user/update'
    * Updates info on a User model if request is authenticated.
-   * 
+   *
    * Returns json:
    * {
    *     error: [ true | false ],
@@ -153,7 +165,8 @@ module.exports = {
       return res.json({
         error: false,
         warning: true,
-        message: passwordInvalidMsg
+        message: passwordInvalidMsg,
+        content: null
       });
     } else {
       // Hash the password.
@@ -171,7 +184,8 @@ module.exports = {
             return res.json({
               error: false,
               warning: false,
-              message: accountUpdatedMsg
+              message: accountUpdatedMsg,
+              content: null
             });
           }
         });
