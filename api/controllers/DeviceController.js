@@ -11,14 +11,9 @@ let getFailureMessage = 'Invalid username or password.';
 
 module.exports = {
 
-  /*' post /unet/device/get'
+  /*' post /device/get'
    * Query to check and see if a device auth token is still valid.
    *
-   * Returns json:
-   * {
-   *     error: [ true | false ],
-   *     tokenValid: [ true | false ]
-   * }
    */
   get: function (req, res) {
     // Parse POST for User params.
@@ -50,17 +45,9 @@ module.exports = {
     });
   },
 
-  /* 'post /unet/device/create'
+  /* 'post /device/create'
    * Submit User credentils to create a Device authenticated to the supplied credentials.
    *
-   * Returns json:
-   * {
-   *     error: [ true | false ],
-   *     warning: [ true | false ],
-   *     content: Error, Warning or Success message; E.G. [ 'Incorrect username or password' ],
-   *     exists: [ true | false ],
-   *     token: Authentication token
-   * }
    */
   create: function (req, res) {
     // Parse POST for User params.
@@ -132,7 +119,35 @@ module.exports = {
         });
       }
     });
-  }
+  },
+
+  /*' post /device/get'
+   * Query to de-authorise/delete a Device from a User.
+   *
+   */
+  destroy: function (req, res) {
+    let deviceId        = req.param('logoutId');
+    let deviceAuthToken = req.param('logoutAuthToken');
+
+    // Check the request is authenticted.
+    Device.destroy({
+      id: deviceId,
+      authToken: deviceAuthToken
+    })
+    .exec((err) => {
+      if (err) {
+        return res.json(Utils.returnJsonError(err));
+      }
+      else {
+        return res.json({
+          error: false,
+          warning: false,
+          message: 'Device De-Authorised',
+          content: null
+        });
+      }
+    });
+  },
 
 };
 
