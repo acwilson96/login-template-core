@@ -30,7 +30,19 @@ module.exports = function(req, res, next) {
       }).populateAll().exec((err, deviceOwner) => {
         if (err) { return res.serverError(err); }
         req.options.user = deviceOwner;
-        return next();
+        Device.update(
+          { authToken: authToken },
+          { lastUsed:  Math.round(+new Date()/1000) }
+        )
+        .fetch()
+        .exec((err) => {
+          if (err) {
+            console.log('Error Updating lastUsed of Device');
+          }
+          else {
+            return next();
+          }
+        });
       });
     } else {
       return res.forbidden('You are not permitted to perform this action.');
