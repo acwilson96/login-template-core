@@ -25,4 +25,8 @@ module.exports.policies = {
     destroy: 'SessionAuth'
   },
 
+  DeviceController: {
+    destroy: 'SessionAuth'
+  }
+
 };
