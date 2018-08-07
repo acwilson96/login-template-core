@@ -60,6 +60,11 @@ module.exports.routes = {
     action: 'create'
   },
 
+  'post /device/destroy': {
+    controller: 'DeviceController',
+    action: 'destroy'
+  },
+
   // User Controller
 
   'post /user/get': {
