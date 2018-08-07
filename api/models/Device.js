@@ -10,8 +10,8 @@ module.exports = {
 
   attributes: {
 
-    createdAt: { type: 'number', autoCreatedAt: true, },
-    updatedAt: { type: 'number', autoUpdatedAt: true, },
+    createdAt: { type: 'number' },
+    lastUsed:  { type: 'number' },
     id: { type: 'string', columnName: '_id', autoIncrement: true},
 
     authToken: {
@@ -34,11 +34,13 @@ module.exports = {
   },
 
   // Called before a Device model is created.
-  beforeCreate: (values, cb) => {
+  beforeCreate: (valuesToSet, cb) => {
     // Generate random token.
     crypto.randomBytes(256, (err, buf) => {
       if (err) { return cb(err); };
-      values.authToken = buf.toString('hex');
+      valuesToSet.authToken = buf.toString('hex');
+      valuesToSet.createdAt = Math.round(+new Date()/1000);
+      valuesToSet.lastUsed  = Math.round(+new Date()/1000);
       cb();
     });
   },
