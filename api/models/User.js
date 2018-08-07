@@ -10,7 +10,7 @@ module.exports = {
 
   attributes: {
 
-    createdAt: { type: 'number', autoCreatedAt: true, },
+    createdAt: { type: 'number' },
     updatedAt: { type: 'number', autoUpdatedAt: true, },
     id: { type: 'string', columnName: '_id', autoIncrement: true },
 
@@ -44,6 +44,7 @@ module.exports = {
     bcrypt.hash(valuesToSet.password, 10, (err, hash) => {
       if (err) { return cb(err); }
       valuesToSet.password = hash;
+      valuesToSet.createdAt = Math.round(+new Date()/1000);
       return proceed();
     });
   },
