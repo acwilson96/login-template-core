@@ -125,13 +125,13 @@ module.exports = {
         User.create({
           username: submitUsername,
           password: submitPassword
-        }).exec((err, newUser) => {
+        }).exec((err) => {
           if (err) { return res.json(Utils.returnJsonError(err)); }
           return res.json({
             error: false,
             warning: false,
             message: userCreatedMsg,
-            content: newUser
+            content: null
           });
         });
       }
