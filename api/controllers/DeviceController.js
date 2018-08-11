@@ -88,7 +88,7 @@ module.exports = {
                   warning: false,
                   message: null,
                   content: {
-                    exists: false,
+                    authStatus: true,
                     authToken: newDevice.authToken
                   }
                 });
