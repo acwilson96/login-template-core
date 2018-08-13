@@ -55,10 +55,9 @@ module.exports = {
   },
 
   // Events to trigger when a User is destroyed.
-  afterDestroy: (destroyedRecords, cb) => {
+  beforeDestroy: (destroyedRecords, next) => {
     var userID = _.pluck(destroyedRecords, 'id');
-    // Destroy all this Users data. 
-    Device.destroy({ owner: userID }).exec(cb);
+    Device.destroy({ owner: userID }).fetch().exec(next);
   },
 
 };
