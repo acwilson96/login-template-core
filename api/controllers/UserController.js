@@ -46,9 +46,7 @@ module.exports = {
       error: false,
       warning: false,
       message: null,
-      content: {
-        user: _.omit(req.options.user, ['password'])
-      }
+      content: _.omit(req.options.user, ['password'])
     });
   },
 
