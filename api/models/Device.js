@@ -37,7 +37,7 @@ module.exports = {
   beforeCreate: (valuesToSet, cb) => {
     // Generate random token.
     crypto.randomBytes(256, (err, buf) => {
-      if (err) { return cb(err); };
+      if (err) { return cb(err); }
       valuesToSet.authToken = buf.toString('hex');
       valuesToSet.createdAt = Math.round(+new Date()/1000);
       valuesToSet.lastUsed  = Math.round(+new Date()/1000);

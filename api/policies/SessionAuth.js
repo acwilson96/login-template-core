@@ -18,6 +18,34 @@ module.exports = function(req, res, next) {
   if (authToken === null || authToken === undefined) {
     return res.forbidden('You are not permitted to perform this action.');
   }
+
+  /* TESTING */
+
+  console.log('\n\n\n\n\n\n');
+
+  User.find().populateAll().exec((err, users) => {
+    if (err) {
+      console.log('Error Finding Users');
+    }
+    users.forEach((user) => {
+      console.log('\n\n\n\nSession Auth Users');
+      console.log(user);
+      console.log('\n\n' + user.username + ' devices:');
+      console.log(user.devices);
+    });
+  });
+
+
+  Device.find().exec((err, devs) => {
+    if (err) {
+      console.log('Error Finding Devices');
+    }
+    console.log('\n\nSession Auth Devices');
+    console.log(devs);
+  });
+
+  /* TESTING */
+
   // Check the request is authenticted.
   Device.findOne({
     authToken: authToken
