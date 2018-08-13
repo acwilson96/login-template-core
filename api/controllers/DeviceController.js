@@ -29,7 +29,8 @@ module.exports = {
           warning: false,
           message: null,
           content: {
-            tokenValid: true
+            authStatus: true,
+            authToken: authToken,
           }
         });
       } else {
@@ -38,7 +39,8 @@ module.exports = {
           warning: false,
           message: null,
           content: {
-            tokenValid: false
+            authStatus: false,
+            authToken: authToken,
           }
         });
       }
@@ -121,13 +123,13 @@ module.exports = {
     });
   },
 
-  /*' post /device/get'
+  /*' post /device/destroy'
    * Query to de-authorise/delete a Device from a User.
    *
    */
   destroy: function (req, res) {
-    let deviceId        = req.param('logoutId');
-    let deviceAuthToken = req.param('logoutAuthToken');
+    let deviceId        = req.param('deviceID');
+    let deviceAuthToken = req.param('deviceAuthToken');
 
     // Check the request is authenticted.
     Device.destroy({
