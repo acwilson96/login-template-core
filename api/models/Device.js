@@ -10,9 +10,9 @@ module.exports = {
 
   attributes: {
 
-    createdAt: { type: 'number' },
-    lastUsed:  { type: 'number' },
-    id: { type: 'string', columnName: '_id', autoIncrement: true},
+    lastUsed:  {
+      type: 'number'
+    },
 
     authToken: {
       type: 'string',

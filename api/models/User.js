@@ -10,10 +10,6 @@ module.exports = {
 
   attributes: {
 
-    createdAt: { type: 'number' },
-    updatedAt: { type: 'number', autoUpdatedAt: true, },
-    id: { type: 'string', columnName: '_id', autoIncrement: true },
-
     username: {
       type: 'string',
       required: true,
