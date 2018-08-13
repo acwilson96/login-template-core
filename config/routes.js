@@ -41,13 +41,6 @@ module.exports.routes = {
   //  ╠═╣╠═╝║  ║╣ ║║║ ║║╠═╝║ ║║║║║ ║ ╚═╗
   //  ╩ ╩╩  ╩  ╚═╝╝╚╝═╩╝╩  ╚═╝╩╝╚╝ ╩ ╚═╝
 
-  'GET /csrfToken': {
-    action: 'security/grant-csrf-token',
-    cors: {
-      allowOrigins: [ 'http://localhost:3000' ]
-    }
-  },
-
   // Device Controller
 
   'post /device/get': {
