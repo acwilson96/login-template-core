@@ -26,12 +26,6 @@ module.exports = {
     },
   },
 
-  cors: {
-    allRoutes: true,
-    allowOrigins: 'http://localhost:3000',
-    allowCredentials: true,
-  },
-
   routes: {
     'GET /csrfToken': {
       action: 'security/grant-csrf-token',
@@ -42,13 +36,11 @@ module.exports = {
   },
 
   security: {
-    security: {
-      cors: {
-        allRoutes: true,
-        allowOrigins: [ 'http://localhost:3000' ],
-        allowCredentials: true,
-      },
-    }
+    cors: {
+      allRoutes: true,
+      allowOrigins: [ 'http://localhost:3000' ],
+      allowCredentials: true,
+    },
   }
 
 };
