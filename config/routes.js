@@ -41,13 +41,6 @@ module.exports.routes = {
   //  ╠═╣╠═╝║  ║╣ ║║║ ║║╠═╝║ ║║║║║ ║ ╚═╗
   //  ╩ ╩╩  ╩  ╚═╝╝╚╝═╩╝╩  ╚═╝╩╝╚╝ ╩ ╚═╝
 
-  'GET /csrfToken': {
-    action: 'security/grant-csrf-token',
-    cors: {
-      allowOrigins: [ 'https://login-template-web.herokuapp.com' ]
-    }
-  },
-
   // Device Controller
 
   'post /device/get': {
