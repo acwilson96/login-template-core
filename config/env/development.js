@@ -26,21 +26,21 @@ module.exports = {
     },
   },
 
-  routes: {
-    'GET /csrfToken': {
-      action: 'security/grant-csrf-token',
-      cors: {
-        allowOrigins: [ 'http://localhost:3000' ]
-      }
-    },
-  },
+  // routes: {
+  //   'GET /csrfToken': {
+  //     action: 'security/grant-csrf-token',
+  //     cors: {
+  //       allowOrigins: [ 'http://localhost:3000' ]
+  //     }
+  //   },
+  // },
 
-  security: {
-    cors: {
-      allRoutes: true,
-      allowOrigins: [ 'http://localhost:3000' ],
-      allowCredentials: true,
-    },
-  }
+  // security: {
+  //   cors: {
+  //     allRoutes: true,
+  //     allowOrigins: [ 'http://localhost:3000' ],
+  //     allowCredentials: true,
+  //   },
+  // }
 
 };
