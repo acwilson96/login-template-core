@@ -157,7 +157,7 @@ module.exports = {
     ***************************************************************************/
     cors: {
       allRoutes: true,
-      allowOrigins: [ process.env.FRONTEND_URL ],
+      allowOrigins: [ 'https' + process.env.FRONTEND_URL, 'https' + process.env.FRONTEND_URL ],
       allowCredentials: true,
     },
 
@@ -258,9 +258,7 @@ module.exports = {
     * > Be sure to use the right protocol!  ("http://" vs. "https://")         *
     *                                                                          *
     ***************************************************************************/
-    onlyAllowOrigins: [
-      process.env.FRONTEND_URL
-    ],
+    onlyAllowOrigins: [ 'https' + process.env.FRONTEND_URL, 'https' + process.env.FRONTEND_URL ],
 
 
     /***************************************************************************
@@ -378,8 +376,8 @@ module.exports = {
   *                                                                         *
   ***************************************************************************/
   custom: {
-    baseUrl: 'https://example.com',
-    internalEmailAddress: 'support@example.com',
+    // baseUrl: 'https://example.com',
+    // internalEmailAddress: 'support@example.com',
 
     // mailgunDomain: 'mg.example.com',
     // mailgunSecret: 'key-prod_fake_bd32301385130a0bafe030c',
