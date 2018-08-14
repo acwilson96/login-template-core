@@ -28,6 +28,13 @@ module.exports.security = {
   *                                                                          *
   ***************************************************************************/
 
+  cors: {
+    allRoutes: true,
+    allowCredentials: true,
+    allowRequestHeaders: 'Host, Origin, Referer, Content-Type, Authorization, Accept',
+    allowRequestMethods: 'GET,PUT,POST,OPTIONS,HEAD'
+  }
+
   /****************************************************************************
   *                                                                           *
   * By default, Sails' built-in CSRF protection is disabled to facilitate     *
