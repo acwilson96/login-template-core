@@ -71,12 +71,20 @@ module.exports = {
       *                                                                           *
       ****************************************************************************/
       // ssl: true,
-
+      adapter: 'sails-mongo',
+      url: process.env.MONGODB_URI
     },
 
   },
 
-
+  routes: {
+    'GET /csrfToken': {
+      action: 'security/grant-csrf-token',
+      cors: {
+        allowOrigins: [ process.env.FRONTEND_URL ]
+      }
+    },
+  },
 
   models: {
 
@@ -148,8 +156,9 @@ module.exports = {
     *                                                                          *
     ***************************************************************************/
     cors: {
-      allowOrigins: [
-        'https://example.com',
+      allRoutes: true,
+      allowOrigins: [ process.env.FRONTEND_URL ],
+      allowCredentials: true,
       ]
     },
 
