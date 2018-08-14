@@ -159,7 +159,6 @@ module.exports = {
       allRoutes: true,
       allowOrigins: [ process.env.FRONTEND_URL ],
       allowCredentials: true,
-      ]
     },
 
   },
@@ -230,7 +229,7 @@ module.exports = {
     *                                                                          *
     ***************************************************************************/
     cookie: {
-      // secure: true,
+      secure: true,
       maxAge: 24 * 60 * 60 * 1000,  // 24 hours
     },
 
@@ -259,10 +258,9 @@ module.exports = {
     * > Be sure to use the right protocol!  ("http://" vs. "https://")         *
     *                                                                          *
     ***************************************************************************/
-    // onlyAllowOrigins: [
-    //   'https://example.com',
-    //   'https://staging.example.com',
-    // ],
+    onlyAllowOrigins: [
+      process.env.FRONTEND_URL
+    ],
 
 
     /***************************************************************************
@@ -331,7 +329,7 @@ module.exports = {
     * (https://sailsjs.com/config/http)                                        *
     *                                                                          *
     ***************************************************************************/
-    // trustProxy: true,
+    trustProxy: true,
 
   },
 
