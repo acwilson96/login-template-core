@@ -48,7 +48,7 @@ module.exports = {
     'GET /csrfToken': {
       action: 'security/grant-csrf-token',
       cors: {
-        allowOrigins: [ 'http://login-template-web.herokuapp.com', 'https://login-template-web.herokuapp.com' ],
+        allowOrigins: [ 'https://login-template-web.herokuapp.com' ],
       }
     },
   },
@@ -94,7 +94,7 @@ module.exports = {
     *                                                                          *
     ***************************************************************************/
     cors: {
-      allowOrigins: [ 'http://login-template-web.herokuapp.com', 'https://login-template-web.herokuapp.com' ],
+      allowOrigins: [ 'https://login-template-web.herokuapp.com' ],
     },
 
   },
@@ -194,7 +194,7 @@ module.exports = {
     * > Be sure to use the right protocol!  ("http://" vs. "https://")         *
     *                                                                          *
     ***************************************************************************/
-    onlyAllowOrigins: [ 'http://login-template-web.herokuapp.com', 'https://login-template-web.herokuapp.com' ]
+    onlyAllowOrigins: [ 'https://login-template-web.herokuapp.com' ]
 
     /***************************************************************************
     *                                                                          *
